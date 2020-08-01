@@ -1,3 +1,8 @@
+body {
+  text-align: center;
+  padding: 5%;
+}
+
 .App {
   text-align: center;
 }
@@ -5,6 +10,43 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.recipe-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 5px;
+}
+
+.recipe-img {
+  display: inline-block;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.recipe-text {
+  display: inline;
+  text-align: left;
+  padding-right: 10px;
+  width: 400px;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 20px;
+  margin: 15px;
+}
+
+.link {
+  position: absolute;
+  left: 30px;
+  top: 30px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
