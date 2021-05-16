@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import RecipeItem from './RecipeItem'
 import { Link } from 'react-router-dom'
 
@@ -19,8 +18,4 @@ class FavoriteRecipeList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  favoriteRecipes: state.favoriteRecipes,
-})
-
-export default connect(mapStateToProps, null)(FavoriteRecipeList)
+export default FavoriteRecipeList

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import {
   Form,
@@ -7,40 +7,35 @@ import {
   FormLabel,
   Button,
 } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { setRecipes } from '../actions/setRecipes'
+import RecipeList from './RecipeList'
 
-class SearchRecipes extends Component {
-  constructor() {
-    super()
+const SearchRecipes = () => {
+  const [ingredents, setIngredents] = useState('')
+  const [dish, setDish] = useState('')
+  const [list, setList] = useState([])
 
-    this.state = {
-      ingredents: '',
-      dish: '',
-    }
-  }
-
-  search = () => {
-    let { ingredents, dish } = this.state
+  const search = () => {
     const url = `http://www.recipepuppy.com/api/?i=${ingredents}&g=${dish}`
     axios
-      .get('https://cors-anywhere.herokuapp.com/' + url, {})
+      .get('https://cors-anywhere.herokuapp.com/' + url, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
       .then(response => response?.data)
-      .then(json => this.props.setRecipes(json?.results))
+      .then(json => setList(json?.results))
       .catch(error => console.error('Error:', error))
   }
 
-  render() {
-    return (
+  return (
+    <>
       <Form inline>
         <FormGroup>
           <FormLabel>Ingredents List</FormLabel>{' '}
           <FormControl
             type='text'
             placeholder='garlic, chicken'
-            onChange={event =>
-              this.setState({ ingredents: event.target.value })
-            }
+            onChange={e => setIngredents(e.target.value)}
           ></FormControl>
         </FormGroup>{' '}
         <FormGroup>
@@ -48,13 +43,17 @@ class SearchRecipes extends Component {
           <FormControl
             type='text'
             placeholder='adobo'
-            onChange={event => this.setState({ dish: event.target.value })}
+            onChange={e => setDish(e.target.value)}
           ></FormControl>
         </FormGroup>{' '}
-        <Button onClick={this.search}>Submit</Button>
+        <Button onClick={search}>Submit</Button>
       </Form>
-    )
-  }
+
+      <div>
+        <RecipeList lists={list} />
+      </div>
+    </>
+  )
 }
 
-export default connect(null, { setRecipes })(SearchRecipes)
+export default SearchRecipes
